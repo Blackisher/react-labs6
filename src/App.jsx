@@ -64,8 +64,8 @@ class App extends Component {
             body: JSON.stringify({id: e.target.name
             })})
             .then(()=>this.setState({isDeleting: false}))
-            .then(()=>this.load());
-        this.setState({id: 0})
+            .then(()=>this.load())
+            .then(()=>this.setState({id: 0}));
     }
 
     submitHandler(e) {
@@ -154,7 +154,7 @@ class App extends Component {
             <hr/>
             so i need list
             <hr/>
-            {this.state.employee.map(employee => <li key={employee.id}>{employee.name}
+            {this.state.employee.map(employee => employee.id === this.state.id ? <li>Deleting ...</li> : <li key={employee.id}>{employee.name}
             <button name={employee.id}
                     onClick={this.deleteHandler}
                     hidden={this.state.isSaving || this.state.isLoading}
