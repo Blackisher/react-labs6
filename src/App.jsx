@@ -11,6 +11,7 @@ class App extends Component {
             userToAdd_name:'Pluto',
             userToAdd_company:'Alpha',
             userToAdd_email:'pluto@alpha.com',
+            isSaving: false,
             isLoading: false
         }
 
@@ -22,6 +23,7 @@ class App extends Component {
         this.userToAddNameOnChangeHandler = this.userToAddNameOnChangeHandler.bind(this);
         this.userToAddCompanyOnChangeHandler = this.userToAddCompanyOnChangeHandler.bind(this);
         this.userToAddEmailOnChangeHandler = this.userToAddEmailOnChangeHandler.bind(this);
+        this.load = this.load.bind(this);
     }
 
 
@@ -52,9 +54,20 @@ class App extends Component {
     }
 
     submitHandler(e) {
-        this.setState({
-            isFormHidden: true
-        })
+        this.setState({isSaving: true})
+        //alternative to fetch is 'axios' - benefit - add error handling
+        fetch('http://localhost:3004/employees', {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({isActive: this.state.userToAdd_isActive,
+                age: this.state.userToAdd_age,
+                name: this.state.userToAdd_name,
+                company: this.state.userToAdd_company,
+                email: this.state.userToAdd_email
+            })})
+            .then(()=>this.setState({isSaving: false}))
+            .then(()=>this.load())
+            .then(()=>this.setState({isFormHidden: true}));
     }
 
     cancelHandler(e) {
@@ -68,13 +81,17 @@ class App extends Component {
         }))
     }
 
-    componentDidMount() {
+    load() {
         this.setState({isLoading: true})
         //alternative to fetch is 'axios' - benefit - add error handling
         fetch('http://localhost:3004/employees')
             .then(response => response.json())
             .then(data => this.setState({ employee: data }))
             .then(()=>this.setState({isLoading: false}));
+    }
+
+    componentDidMount() {
+        this.load()
     }
 
     addNewUserTemplate() {
@@ -87,8 +104,9 @@ class App extends Component {
                 Company: <input value={this.state.userToAdd_company} onChange={this.userToAddCompanyOnChangeHandler}/><br/>
                 Emails: <input value={this.state.userToAdd_email} onChange={this.userToAddEmailOnChangeHandler}/><br/>
 
-                <button name="Submit" onClick={this.submitHandler}>Submit</button>
-                <button name="Cancel" onClick={this.cancelHandler}>Cancel</button>
+                <button name="Submit" onClick={this.submitHandler} disabled={this.state.isSaving}>Submit</button>
+                <button name="Cancel" onClick={this.cancelHandler} disabled={this.state.isSaving}>Cancel</button><br/>
+                {this.state.isSaving ? "SAVING" : ""}
             </>
         }</>)
     }
@@ -108,7 +126,7 @@ class App extends Component {
             (all fields served from the API are editable except the id)
             and a button to submit or cancel (hides the form)
             <hr/>
-            {this.state.isFormHidden ?
+            {this.state.isFormHidden && !this.state.isLoading ?
                 <button name="Add employee" onClick={this.addEmployeeButtonOnClickHandler}>
                     Add employee</button> : ""
             }
