@@ -25,14 +25,6 @@
       "email": "hobbssullivan@vurbo.com"
     },
     {
-      "id": "5dc9bdc6cd6f618976e00dfa",
-      "isActive": true,
-      "age": 26,
-      "name": "Alisha Stephenson",
-      "company": "SURETECH",
-      "email": "alishastephenson@suretech.com"
-    },
-    {
       "id": "5dc9bdc6b0001d85ead79e47",
       "isActive": false,
       "age": 25,
@@ -47,14 +39,6 @@
       "name": "Goodman Booker",
       "company": "WAAB",
       "email": "goodmanbooker@waab.com"
-    },
-    {
-      "id": "5dc9bdc6e2b02c719ed956a7",
-      "isActive": false,
-      "age": 35,
-      "name": "Kayla Simon",
-      "company": "TALENDULA",
-      "email": "kaylasimon@talendula.com"
     },
     {
       "id": "5dc9bdc69ba84395b4ca5705",

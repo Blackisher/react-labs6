@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 class App extends Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class App extends Component {
             userToAdd_company:'Alpha',
             userToAdd_email:'pluto@alpha.com',
             isSaving: false,
+            id: 0,
             isLoading: false
         }
 
@@ -23,6 +24,7 @@ class App extends Component {
         this.userToAddNameOnChangeHandler = this.userToAddNameOnChangeHandler.bind(this);
         this.userToAddCompanyOnChangeHandler = this.userToAddCompanyOnChangeHandler.bind(this);
         this.userToAddEmailOnChangeHandler = this.userToAddEmailOnChangeHandler.bind(this);
+        this.deleteHandler = this.deleteHandler.bind(this);
         this.load = this.load.bind(this);
     }
 
@@ -51,6 +53,19 @@ class App extends Component {
         this.setState({
             isFormHidden: false
         })
+    }
+
+    deleteHandler(e) {
+        this.setState({id: e.target.name})
+        this.setState({isDeleting: true})
+        fetch('http://localhost:3004/employees/' + e.target.name, {
+            method: 'DELETE',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({id: e.target.name
+            })})
+            .then(()=>this.setState({isDeleting: false}))
+            .then(()=>this.load());
+        this.setState({id: 0})
     }
 
     submitHandler(e) {
@@ -131,6 +146,21 @@ class App extends Component {
                     Add employee</button> : ""
             }
             {addNewUser}
+            <hr/>
+            Add a “Delete” button that will delete an employee from the list by
+            calling the DELETE endpoint on /employees/:id.When the employee is
+            being deleted the whole row for the employee should show “Deleting
+            …” and then the list should be reloaded.
+            <hr/>
+            so i need list
+            <hr/>
+            {this.state.employee.map(employee => <li key={employee.id}>{employee.name}
+            <button name={employee.id}
+                    onClick={this.deleteHandler}
+                    hidden={this.state.isSaving || this.state.isLoading}
+                    disabled={this.state.isDeleting || this.state.isSaving || this.state.isLoading}>Delete</button>
+            </li>)}
+
         </div>);
     }
 }
