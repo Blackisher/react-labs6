@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-
+import {
+    Link
+} from "react-router-dom";
 
 class PageEmployeesList extends Component {
 
@@ -65,6 +67,8 @@ class PageEmployeesList extends Component {
         const employeesList = this.employeesList()
         return (<>
             {employeesList}
+            <hr/>
+            <Link to="/new"><button>Create new employee</button></Link>
         </>);
     }
 

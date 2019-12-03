@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from "react-router-dom";
 
 
 class PageEmployee extends Component {
@@ -73,7 +74,10 @@ class PageEmployee extends Component {
                     <button name="Cancel" onClick={this.cancelHandler} disabled={this.state.isSaving}>Cancel</button><br/>
                     {this.state.isSaving ? "SAVING" : ""}
                 </>
-        }</>)
+        }
+        <hr/>
+            <Link to="/"><button>Go back to list</button></Link>
+        </>)
     }
 
 
