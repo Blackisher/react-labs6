@@ -1,20 +1,28 @@
 import React, { Component } from 'react'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+
 import PageEmployee from "./PageEmployee";
 import PageEmployeesList from "./PageEmployeesList";
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
 
     render() {
-        return (<div>
-            <h1>Minimal React</h1>
-            <h3>Lab8</h3>
-            <PageEmployeesList/>
-            <PageEmployee/>
-        </div>);
+        return (
+        <Router>
+            <Switch>
+                <Route exact path="/">
+                    <PageEmployeesList></PageEmployeesList>
+                </Route>
+                <Route exact path="/new">
+                    <PageEmployee></PageEmployee>
+                </Route>
+            </Switch>
+        </Router>);
     }
 }
 
