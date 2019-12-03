@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
-
+import { Link, withRouter } from "react-router-dom";
 
 class PageEmployee extends Component {
 
@@ -76,7 +75,7 @@ class PageEmployee extends Component {
                 </>
         }
         <hr/>
-            <Link to="/"><button>Go back to list</button></Link>
+            <Link to="/"><button disabled={this.state.isSaving}>Go back to list</button></Link>
         </>)
     }
 
@@ -94,8 +93,10 @@ class PageEmployee extends Component {
                 email: this.state.userToAdd_email
             })})
             .then(()=>this.setState({isSaving: false}))
-            .then(()=>this.load())
-            .then(()=>this.setState({isFormHidden: true}));
+            .then(()=>this.setState({isFormHidden: true}))
+            .then((data)=>this.props.history.push("/"));
+        // console.log(this.props);
+        // console.log(withRouter);
     }
 
     cancelHandler(e) {
@@ -107,6 +108,8 @@ class PageEmployee extends Component {
             userToAdd_company: 'MOON',
             userToAdd_email: 'baby@moon.com'
         }))
+
+        return this.props.history.push('/')
     }
 
     render() {
@@ -118,4 +121,4 @@ class PageEmployee extends Component {
 
 }
 
-export default PageEmployee
+export default withRouter(PageEmployee)

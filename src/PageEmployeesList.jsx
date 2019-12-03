@@ -68,7 +68,7 @@ class PageEmployeesList extends Component {
         return (<>
             {employeesList}
             <hr/>
-            <Link to="/new"><button>Create new employee</button></Link>
+            <Link to="/new"><button disabled={this.state.isLoading}>Create new employee</button></Link>
         </>);
     }
 
