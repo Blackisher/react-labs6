@@ -47,7 +47,7 @@ class PageEmployeesList extends Component {
         this.load()
     }
 
-    addNewUserTemplate() {
+    employeesList() {
         return (<>
             Data: {this.state.isLoading ? "Loading..." : ""}
             <hr/>
@@ -62,9 +62,9 @@ class PageEmployeesList extends Component {
     }
 
     render() {
-        const addNewUser = this.addNewUserTemplate()
+        const employeesList = this.employeesList()
         return (<>
-            {addNewUser}
+            {employeesList}
         </>);
     }
 
